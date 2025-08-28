@@ -56,3 +56,38 @@ def get_info(search, sessionid, search_type="username"):
         return {"user": None, "error": "Request failed"}
 
 
+def advanced_lookup(username):
+    body = "signed_body=SIGNATURE." + quote_plus(
+        dumps({"q": username, "skip_recovery": "1"}, separators=(",", ":"))
+    )
+    headers = {
+        "Accept-Language": "en-US",
+        "User-Agent": "Instagram 101.0.0.15.120",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-IG-App-ID": "124024574287414",
+        "Accept-Encoding": "gzip, deflate",
+        "Host": "i.instagram.com",
+        "Connection": "keep-alive",
+        "Content-Length": str(len(body))
+    }
+    try:
+        response = requests.post(
+            'https://i.instagram.com/api/v1/users/lookup/',
+            headers=headers,
+            data=body
+        )
+        return {"user": response.json(), "error": None}
+    except decoder.JSONDecodeError:
+        return {"user": None, "error": "Rate limit on lookup"}
+
+
+def enrich_phone(number, country_code):
+    try:
+        full_number = f"+{country_code}{number}"
+        parsed = phonenumbers.parse(full_number)
+        country = pycountry.countries.get(alpha_2=region_code_for_country_code(parsed.country_code))
+        return f"{full_number} ({country.name})" if country else full_number
+    except Exception:
+        return f"+{country_code}{number} (Unknown)"
+
+
