@@ -91,3 +91,49 @@ def enrich_phone(number, country_code):
         return f"+{country_code}{number} (Unknown)"
 
 
+def print_info(info, extra_info=None):
+    print("\n" + "-" * 40)
+    print(f"Username               : {info.get('username', 'N/A')}")
+    print(f"User ID                : {info.get('userID')}")
+    print(f"Full Name              : {info.get('full_name', 'N/A')}")
+    print(f"Verified               : {info.get('is_verified')} | Business Account: {info.get('is_business')}")
+    print(f"Private Account        : {info.get('is_private')}")
+    print(f"Followers              : {info.get('follower_count')}")
+    print(f"Following              : {info.get('following_count')}")
+    print(f"Posts                  : {info.get('media_count')}")
+    print(f"IGTV Posts             : {info.get('total_igtv_videos')}")
+    print(f"Biography              :\n  {'  '.join(info.get('biography', '').splitlines())}")
+    print(f"External URL           : {info.get('external_url', 'None')}")
+    print(f"Linked WhatsApp        : {info.get('is_whatsapp_linked')}")
+    print(f"Memorial Account       : {info.get('is_memorialized')}")
+    print(f"New to Instagram       : {info.get('is_new_to_instagram')}")
+
+    if info.get("public_email"):
+        print(f"Public Email           : {info['public_email']}")
+    if info.get("public_phone_number"):
+        enriched = enrich_phone(info['public_phone_number'], info['public_phone_country_code'])
+        print(f"Public Phone           : {enriched}")
+    if 'hd_profile_pic_url_info' in info:
+        print(f"Profile Picture        : {info['hd_profile_pic_url_info'].get('url')}")
+
+    if extra_info:
+        if extra_info.get("obfuscated_email"):
+            print(f"Obfuscated Email       : {extra_info['obfuscated_email']}")
+        if extra_info.get("obfuscated_phone"):
+            print(f"Obfuscated Phone       : {extra_info['obfuscated_phone']}")
+    print("-" * 40)
+
+
+def process_user(search, sessionid, search_type):
+    info_result = get_info(search, sessionid, search_type)
+    if info_result["error"]:
+        print(f"❌ {search} - {info_result['error']}")
+        return {"username": search, "error": info_result["error"]}
+
+    user_info = info_result["user"]
+    extra_lookup = advanced_lookup(user_info["username"])
+    extra_data = extra_lookup["user"] if not extra_lookup["error"] else {}
+
+    print_info(user_info, extra_data)
+    return user_info
+
