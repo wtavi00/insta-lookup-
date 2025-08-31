@@ -24,3 +24,47 @@ It supports both **single-user** and **batch lookups**, and provides **public an
 
 ---
 
+
+## 🔑 Getting Your Session ID
+Log in to Instagram on your desktop browser.
+Open Developer Tools → Application → Cookies.
+Copy the value of the sessionid cookie.
+
+## 🧪 Usage
+### ▶️ Single User Lookup
+```bash
+python insta_user_lookup.py -s YOUR_SESSION_ID -u instagram
+```
+or by userID:
+```bash
+python insta_user_lookup.py -s YOUR_SESSION_ID -i 1234567890
+```
+
+### 📁 Batch Mode (Multiple Users)
+Create a file usernames.txt.
+Then run
+Save to JSON
+
+## 🖥 Output Example
+```bash
+Username               : natgeo
+User ID                : 787132
+Full Name              : National Geographic
+Verified               : True | Business Account: True
+Private Account        : False
+Followers              : 287000000
+Following              : 134
+Posts                  : 30000
+External URL           : https://natgeo.com
+Biography              : Taking our understanding of the world further...
+Public Email           : contact@natgeo.com
+Obfuscated Phone       : +1 *** ***90
+Profile Picture        : https://instagram.natgo.net/...
+```
+## 🛡 Notes
+Avoid sending too many requests too fast - you might get rate limited.
+The tool includes a small delay (1.5s) between users in batch mode to be safe.
+Some users may not have public info (private/business accounts).
+Obfuscated data is not always available; it depends on the user.
+
+
