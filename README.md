@@ -58,7 +58,7 @@ Posts                  : 30000
 External URL           : https://natgeo.com
 Biography              : Taking our understanding of the world further...
 Public Email           : contact@natgeo.com
-Obfuscated Phone       : +1 *** ***90
+Obfuscated Phone       : +* *** ***90
 Profile Picture        : https://instagram.natgo.net/...
 ```
 ## 🛡 Notes
