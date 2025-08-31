@@ -137,3 +137,47 @@ def process_user(search, sessionid, search_type):
     print_info(user_info, extra_data)
     return user_info
 
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Instagram user info lookup tool with batch support.")
+    parser.add_argument('-s', '--sessionid', required=True, help="Instagram session ID")
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-u', '--username', help="Instagram username")
+    group.add_argument('-i', '--id', help="Instagram user ID")
+    group.add_argument('-f', '--file', help="File with usernames or IDs (one per line)")
+
+    parser.add_argument('-o', '--output', help="Optional output file for JSON results")
+
+    args = parser.parse_args()
+    sessionid = args.sessionid
+
+    results = []
+
+    if args.file:
+        with open(args.file, 'r', encoding='utf-8') as f:
+            lines = [line.strip() for line in f if line.strip()]
+        for entry in lines:
+            if entry.isdigit():
+                search_type = "id"
+            else:
+                search_type = "username"
+            user_data = process_user(entry, sessionid, search_type)
+            results.append(user_data)
+            time.sleep(1.5)  # to avoid hitting rate limits too quickly
+    else:
+        search_type = "id" if args.id else "username"
+        search = args.id or args.username
+        user_data = process_user(search, sessionid, search_type)
+        results.append(user_data)
+
+    if args.output:
+        try:
+            with open(args.output, "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=2)
+            print(f"\n✅ Results saved to {args.output}")
+        except IOError:
+            print(f"❌ Could not write to {args.output}")
+
+
