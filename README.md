@@ -1,4 +1,3 @@
-"""
 # 📸 Instagram User Info Lookup Tool
 
 This Python tool lets you fetch **detailed profile information** from Instagram using a valid session ID.  
