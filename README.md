@@ -10,16 +10,37 @@ It supports both **single-user** and **batch lookups**, and provides **public an
 > This tool uses **Instagram's private APIs**, which are undocumented and may violate [Instagram’s Terms of Use](https://help.instagram.com/581066165581870). Use at your own risk. Your account may be **rate-limited**, **restricted**, or **banned**.
 
 ---
+---
+
+### 2. Code Structure
+Right now your repo might be just one or two Python files.  
+
+insta-lookup-/
+│── insta_lookup.py # CLI entry point
+│── lookup/
+│ ├── init.py
+│ ├── auth.py # session handling
+│ ├── fetch.py # core API requests
+│ ├── parse.py # parsing/cleaning output
+│ └── export.py # save to JSON/CSV
+│── requirements.txt
+│── README.md
+
+
+---
 
 ## 🚀 Features
 
-- 🔍 Lookup by **username** or **user ID**
-- 📂 Batch mode: Read from a file of usernames/IDs
-- 📊 Fetch public profile stats: followers, bio, posts, links, etc.
-- 🔐 Extract public **email** / **phone number**
-- 🕵️ Obfuscated **email/phone** from advanced recovery endpoint
-- 🌐 Displays **profile picture URL**
-- 📤 Optional JSON export
+- Lookup by **username** or **user ID**
+- Batch mode: Read from a file of usernames/IDs
+- Fetch public profile stats: followers, bio, posts, links, etc.
+- Extract public **email** / **phone number**
+- Add support for profile pictures download
+- Handle private accounts gracefully
+- Obfuscated **email/phone** from advanced recovery endpoint
+- Displays **profile picture URL**
+- Provide a GUI frontend
+- JSON export
 
 ---
 
@@ -43,6 +64,23 @@ python insta_user_lookup.py -s YOUR_SESSION_ID -i 1234567890
 Create a file usernames.txt.
 Then run
 Save to JSON
+
+## ⚡ Usage
+### By username:
+```bash
+python insta_lookup.py --username example_user
+```
+
+### By user ID:
+```bash
+python insta_lookup.py --id 123456789
+```
+
+### Save results:
+```bash
+python insta_lookup.py --username example_user --output results.json
+```
+
 
 ## 🖥 Output Example
 ```bash
