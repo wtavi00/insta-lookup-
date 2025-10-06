@@ -14,7 +14,7 @@ It supports both **single-user** and **batch lookups**, and provides **public an
 
 ### 2. Code Structure
 Right now your repo might be just one or two Python files.  
-
+```bash
 insta-lookup-/
 │── insta_lookup.py # CLI entry point
 │── lookup/
@@ -25,7 +25,7 @@ insta-lookup-/
 │ └── export.py # save to JSON/CSV
 │── requirements.txt
 │── README.md
-
+```
 
 ---
 
@@ -104,4 +104,8 @@ The tool includes a small delay (1.5s) between users in batch mode to be safe.
 Some users may not have public info (private/business accounts).
 Obfuscated data is not always available; it depends on the user.
 
+### Authier
+[Avijit Tarafder](https://github.com/wtavi00)
 
+### License
+[MIT License](https://github.com/wtavi00/insta-lookup-/blob/main/LICENSE)
